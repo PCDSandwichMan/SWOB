@@ -20,7 +20,7 @@ passport.use(
     },
     async (req, payload, done) => {
       try {
-        const user = await User.findById(payload.foundUser._id);
+        const user = await User.findById(payload.createdUser._id);
 
         if (!user) {
           return done(null, false);

@@ -20,16 +20,9 @@ exports.battleHandler = async req => {
     req.body,
     req.headers.authorization ? req.headers.authorization.split(' ')[1] : null
   );
-  const tokenUser = checkReq.tokenCheck;
-  if (!checkReq.valid) {
-    return {
-      errors: checkReq.errors,
-      success: false
-    };
-  }
-
+  
   const { battleType } = req.body;
-  const { username } = tokenUser.foundUser;
+  const { username } = req.user;
 
   const getLiveUserInfo = await Users.findOne({ username: username });
   const { rank } = getLiveUserInfo.userCharacter.rpgInfo;
@@ -68,7 +61,7 @@ exports.battleHandler = async req => {
     // handles saving log for battle of battle
     const xpAmount = battleResults === 'won' ? 20 : 10;
     const generateBattleMessage = await helperFuncs.createBattleLog(
-      tokenUser.foundUser,
+      req.user,
       xpAmount,
       battleResults,
       characterCall,
@@ -106,18 +99,18 @@ exports.battleHandler = async req => {
       userRank,
       userUsername
     );
+
     if (!getOnlineDefender.success) {
       console.log(getOnlineDefender);
       return {
         success: false,
         response: {
-          error: "could not get random user"
+          error: 'could not get random user'
         }
       };
     }
 
     const defenderChar = getOnlineDefender.randomOnlineUser;
-    console.log(defenderChar);
     // handles attack after bot/botStatGen and user info fetched
     let battleResults = 'in progress....';
     userAtk > defenderChar.userCharacter.stats.defenseMultiplier
@@ -133,7 +126,7 @@ exports.battleHandler = async req => {
     // handles saving log for battle of battle
     const xpAmount = battleResults === 'won' ? 20 : 10;
     const generateBattleMessage = await helperFuncs.createBattleLog(
-      tokenUser.foundUser,
+      req.user,
       xpAmount,
       battleResults,
       defenderChar

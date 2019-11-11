@@ -3,58 +3,52 @@ const router = require('express').Router();
 const exTools = require('../utils/extractTools');
 const valTools = require('../utils/validators');
 const battle = require('../controllers/battleController');
+const passport = require('passport');
+const passportConfig = require('../utils/passport');
 
 // Get Chat Messages
-router.get('/messages/:type', async (req, res) => {
-  // Verifies the that the path param is valid
-  if (
-    req.params.type !== 'battle' &&
-    req.params.type !== 'general' &&
-    req.params.type !== 'chat'
-  ) {
-    return res
-      .status(400)
-      .json({ userMessages: 'you did not send a valid type in you parameter' });
-  }
-
-  if (req.params.type === 'battle') {
-  }
-
-  // Verify token and get user from token
-  const user = await exTools.tokenExtract(req);
-  // TODO for testing can delete me
-  // console.log('========= NOTIFICATION ROUTES =============');
-  // console.log(user);
-  // console.log('========= NOTIFICATION ROUTES =============');
-  if (user) {
-    if (user.errors) {
-      return res.status(400).json(user.errors);
+router.get(
+  '/messages/:type',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    // Verifies the that the path param is valid
+    if (
+      req.params.type !== 'battle' &&
+      req.params.type !== 'general' &&
+      req.params.type !== 'chat'
+    ) {
+      return res.status(400).json({
+        userMessages: 'you did not send a valid type in you parameter'
+      });
     }
 
-    const userId = user._id;
-    const getAllMessageType = await Notifications.find({
-      $and: [
-        { $or: [{ receiver: userId }, { sender: userId }] },
-        { readStatus: false },
-        { messageType: req.params.type }
-      ]
-    })
-      .sort({ createdAt: 'desc' })
-      .limit(10);
-    if (getAllMessageType.length <= 0) {
-      return res
-        .status(404)
-        .json({ chatMessages: 'there are not chat messages for this user' });
+    // Verify token and get user from token
+    const userId = req.user._id;
+    try {
+      const getAllMessageType = await Notifications.find({
+        $and: [
+          { $or: [{ receiver: userId }, { sender: userId }] },
+          { readStatus: false },
+          { messageType: req.params.type }
+        ]
+      })
+        .sort({ createdAt: 'desc' })
+        .limit(10);
+      if (getAllMessageType.length <= 0) {
+        return res
+          .status(404)
+          .json({ chatMessages: 'there are not chat messages for this user' });
+      }
+      return res.status(200).json(getAllMessageType);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
     }
-    return res.status(200).json(getAllMessageType);
   }
-  return res.status(500).json({
-    notifications: 'an error occurred while gather notification for this user'
-  });
-});
+);
 
 // Handle Battles
-router.post('/battle', async (req, res) => {
+router.post('/battle', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const handleBattle = await battle.battleHandler(req);
   if (!handleBattle) {
     return res

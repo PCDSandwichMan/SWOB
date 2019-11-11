@@ -115,7 +115,7 @@ exports.getOnlineUser = async (userRank, userUsername) => {
       { username: { $ne: userUsername } }
     ]
   });
-
+  
   //   for ±5 is not applicable for this user then it will default to a random
   const getRandomUser = async () => {
     const userCount = await Users.countDocuments();
@@ -132,6 +132,7 @@ exports.getOnlineUser = async (userRank, userUsername) => {
     randomOnlineUser =
       randomDefender[Math.floor(Math.random() * randomDefender.length)];
   }
+  console.log(randomOnlineUser)
   return {
     success: true,
     randomOnlineUser
