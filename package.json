@@ -4,8 +4,12 @@
   "description": "This is for a MERN stack application that lets user's have a profile and store data from swapi",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm rebuild node-sass --prefix client && npm run build --prefix client"
   },
   "author": "PCDSandwichMan",
   "license": "MIT",
