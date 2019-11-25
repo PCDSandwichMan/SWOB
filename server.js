@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const config = require("./utils/config");
 const helmet = require("helmet");
+const dev = app.get("env") !== "production";
+const path = require("path");
 
 const app = express();
 
@@ -12,6 +14,18 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+if (!dev) {
+  app.disable("x-powered-by");
+  // npm compression ?
+  app.use(morgan("common"));
+
+  app.use(express.static(path.resolve(__dirname, "client", "build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
@@ -36,7 +50,6 @@ database.once("open", () => {
   app.use("/data", dataRoute);
   app.use("/notifications", notificationRoute);
   app.use("/squad", squadRoute);
-  
 
   // Route 404 Fallback
   app.use((req, res, next) => {
@@ -51,3 +64,7 @@ database.once("open", () => {
     console.log(`app listening on PORT: ${config.PORT}`)
   );
 });
+
+
+// ,
+    // "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm rebuild node-sass --prefix client && npm run build --prefix client"
