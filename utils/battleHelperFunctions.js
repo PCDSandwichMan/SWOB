@@ -1,7 +1,7 @@
-const Users = require('../models/User');
-const Notifications = require('../models/Notification');
-const axios = require('axios');
-const valTools = require('./validators');
+const Users = require("../models/User");
+const Notifications = require("../models/Notification");
+const axios = require("axios");
+const valTools = require("./validators");
 
 // - Gens a random character from swapi with random character and random return result index (relies on getChar())
 exports.getRandCharacter = async () => {
@@ -24,7 +24,7 @@ exports.getRandCharacter = async () => {
     .catch(err => {
       console.log(err);
       return {
-        error: 'an error occurred while creating your battle'
+        error: "an error occurred while creating your battle"
       };
     });
   return characterCall;
@@ -32,7 +32,7 @@ exports.getRandCharacter = async () => {
 
 // - Used to gen random char for the battle message route when creating a random character (if needed it can gen an ID by allowing length arg and adding a loops)
 exports.getChar = () => {
-  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  const characters = "abcdefghijklmnopqrstuvwxyz";
   let charactersLength = characters.length;
   return characters.charAt(Math.round(Math.random() * charactersLength));
 };
@@ -45,10 +45,10 @@ exports.generateBot = userRank => {
   let botDef = 0;
   let botAtk = 0;
 
-  if (typeof userRank === 'undefined') {
-    console.log('you must include a user rank to generate a bot');
+  if (typeof userRank === "undefined") {
+    console.log("you must include a user rank to generate a bot");
     return {
-      error: 'you must include a user rank to generate a bot'
+      error: "you must include a user rank to generate a bot"
     };
   }
 
@@ -96,10 +96,10 @@ exports.generateBot = userRank => {
 
 // - HANDLE ONLINE CHARACTER GEN AND RETURN FOR ONLINE BATTLES
 exports.getOnlineUser = async (userRank, userUsername) => {
-  if (typeof userRank === 'undefined') {
+  if (typeof userRank === "undefined") {
     return {
       success: false,
-      error: 'must include user rank to get online character'
+      error: "must include user rank to get online character"
     };
   }
   let randomOnlineUser;
@@ -107,7 +107,7 @@ exports.getOnlineUser = async (userRank, userUsername) => {
   const randomDefender = await Users.find({
     $and: [
       {
-        'userCharacter.rpgInfo.rank': {
+        "userCharacter.rpgInfo.rank": {
           $gte: userRank - 5,
           $lte: userRank + 5
         }
@@ -115,7 +115,7 @@ exports.getOnlineUser = async (userRank, userUsername) => {
       { username: { $ne: userUsername } }
     ]
   });
-  
+
   //   for ±5 is not applicable for this user then it will default to a random
   const getRandomUser = async () => {
     const userCount = await Users.countDocuments();
@@ -132,7 +132,7 @@ exports.getOnlineUser = async (userRank, userUsername) => {
     randomOnlineUser =
       randomDefender[Math.floor(Math.random() * randomDefender.length)];
   }
-  console.log(randomOnlineUser)
+  console.log(randomOnlineUser);
   return {
     success: true,
     randomOnlineUser
@@ -142,9 +142,9 @@ exports.getOnlineUser = async (userRank, userUsername) => {
 // - HANDLE XP AND LEVELING AFTER BATTLES AND DEFENDS
 exports.handleXp = async (battleResults, attacker, defender = null) => {
   //    Handles if won increment winner and decrement loser
-  if (battleResults !== 'won' && battleResults !== 'lost') {
+  if (battleResults !== "won" && battleResults !== "lost") {
     console.log(
-      ' ================== DEFAULT DO NOTHING HANDLER (HELPERS XP HANDLER) ================== '
+      " ================== DEFAULT DO NOTHING HANDLER (HELPERS XP HANDLER) ================== "
     );
   }
   //    If won add 20xp to winner else add 20 to defender
@@ -152,7 +152,7 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
   //   If this is a bot it i will be null
   const getDefender = await Users.findOne({ username: defender });
 
-  if (battleResults === 'won') {
+  if (battleResults === "won") {
     getAttacker.userCharacter.rpgInfo.xp += 20;
     if (getDefender) {
       getDefender.userCharacter.rpgInfo.xp -= 10;
@@ -167,11 +167,11 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
   //   update winner xp after determining xp val and IF THE XP IS 0 OR LOWER IS WILL DEFAULT TO 0
   if (getAttacker.userCharacter.rpgInfo.xp <= 0) {
     const updateWinnerXP = await Users.findByIdAndUpdate(getAttacker._id, {
-      $set: { 'userCharacter.rpgInfo.xp': 0 }
+      $set: { "userCharacter.rpgInfo.xp": 0 }
     });
   } else {
     const updateWinnerXP = await Users.findByIdAndUpdate(getAttacker._id, {
-      $set: { 'userCharacter.rpgInfo.xp': getAttacker.userCharacter.rpgInfo.xp }
+      $set: { "userCharacter.rpgInfo.xp": getAttacker.userCharacter.rpgInfo.xp }
     });
   }
   //   update loser xp after determining xp val and check if not bot(shows as null)
@@ -179,26 +179,26 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
     if (getDefender.userCharacter.rpgInfo.xp <= 0) {
       const updateLoserXP = await Users.findByIdAndUpdate(getDefender._id, {
         $set: {
-          'userCharacter.rpgInfo.xp': 0
+          "userCharacter.rpgInfo.xp": 0
         }
       });
     } else {
       const updateLoserXP = await Users.findByIdAndUpdate(getDefender._id, {
         $set: {
-          'userCharacter.rpgInfo.xp': getDefender.userCharacter.rpgInfo.xp
+          "userCharacter.rpgInfo.xp": getDefender.userCharacter.rpgInfo.xp
         }
       });
     }
   }
   //   handles update win and loss ratio
-  if (battleResults === 'won') {
+  if (battleResults === "won") {
     const updateWinnerWL = await Users.findByIdAndUpdate(getAttacker._id, {
       $set: {
-        'userCharacter.stats.totalWins':
+        "userCharacter.stats.totalWins":
           getAttacker.userCharacter.stats.totalWins + 1,
-        'userCharacter.stats.winStreak':
+        "userCharacter.stats.winStreak":
           getAttacker.userCharacter.stats.winStreak + 1,
-        'userCharacter.stats.winLossRatio':
+        "userCharacter.stats.winLossRatio":
           Math.round(
             100 *
               (getAttacker.userCharacter.stats.totalWins +
@@ -212,9 +212,9 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
     if (getDefender) {
       const updateLoserWL = await Users.findByIdAndUpdate(getDefender._id, {
         $set: {
-          'userCharacter.stats.totalLosses':
+          "userCharacter.stats.totalLosses":
             getDefender.userCharacter.stats.totalLosses + 1,
-          'userCharacter.stats.winLossRatio':
+          "userCharacter.stats.winLossRatio":
             Math.round(
               100 *
                 (getDefender.userCharacter.stats.totalWins +
@@ -226,13 +226,13 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
         }
       });
     }
-  } else if (battleResults === 'lost') {
+  } else if (battleResults === "lost") {
     const updateLoserWL = await Users.findByIdAndUpdate(getAttacker._id, {
       $set: {
-        'userCharacter.stats.winStreak': 0,
-        'userCharacter.stats.totalLosses':
+        "userCharacter.stats.winStreak": 0,
+        "userCharacter.stats.totalLosses":
           getAttacker.userCharacter.stats.totalLosses + 1,
-        'userCharacter.stats.winLossRatio':
+        "userCharacter.stats.winLossRatio":
           Math.round(
             100 *
               (getAttacker.userCharacter.stats.totalWins /
@@ -245,9 +245,9 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
     if (getDefender) {
       const updateWinnerXP = await Users.findByIdAndUpdate(getDefender._id, {
         $set: {
-          'userCharacter.stats.totalWins':
+          "userCharacter.stats.totalWins":
             getDefender.userCharacter.stats.totalWins + 1,
-          'userCharacter.stats.winLossRatio':
+          "userCharacter.stats.winLossRatio":
             Math.round(
               100 *
                 (getAttacker.userCharacter.stats.totalWins +
@@ -261,7 +261,7 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
     }
   } else {
     console.log(
-      '========= BATTLE WAS NOT WON OR LOST (HANDLE XP | HELPER FUNCTIONS) =============='
+      "========= BATTLE WAS NOT WON OR LOST (HANDLE XP | HELPER FUNCTIONS) =============="
     );
   }
 
@@ -271,13 +271,14 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
   const checkDefenderForLevel = await Users.findOne({ username: defender });
   if (
     checkAttackerForLevel.userCharacter.rpgInfo.xp >=
-    checkAttackerForLevel.userCharacter.rpgInfo.rank * 500
+    500 * Math.pow(1.1, checkAttackerForLevel.userCharacter.rpgInfo.rank)
   ) {
+    console.log('ran1')
     const levelUpAttacker = await Users.findByIdAndUpdate(
       checkAttackerForLevel._id,
       {
         $set: {
-          'userCharacter.rpgInfo.rank': Math.floor(
+          "userCharacter.rpgInfo.rank": Math.ceil(
             checkAttackerForLevel.userCharacter.rpgInfo.xp / 500
           )
         }
@@ -285,13 +286,14 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
     );
   } else if (
     checkAttackerForLevel.userCharacter.rpgInfo.xp <
-    checkAttackerForLevel.userCharacter.rpgInfo.rank * 500
+    500 * Math.pow(1.1, checkAttackerForLevel.userCharacter.rpgInfo.rank)
   ) {
+    console.log('ran2')
     const levelDownAttacker = await Users.findByIdAndUpdate(
       checkAttackerForLevel._id,
       {
         $set: {
-          'userCharacter.rpgInfo.rank': Math.floor(
+          "userCharacter.rpgInfo.rank": Math.ceil(
             checkAttackerForLevel.userCharacter.rpgInfo.xp / 500
           )
         }
@@ -301,13 +303,13 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
   if (checkDefenderForLevel) {
     if (
       checkDefenderForLevel.userCharacter.rpgInfo.xp >=
-      checkDefenderForLevel.userCharacter.rpgInfo.rank * 500
+      500 * Math.pow(1.1, checkDefenderForLevel.userCharacter.rpgInfo.rank)
     ) {
       const levelUpDefender = await Users.findByIdAndUpdate(
         checkDefenderForLevel._id,
         {
           $set: {
-            'userCharacter.rpgInfo.rank': Math.floor(
+            "userCharacter.rpgInfo.rank": Math.ceil(
               checkDefenderForLevel.userCharacter.rpgInfo.xp / 500
             )
           }
@@ -315,13 +317,13 @@ exports.handleXp = async (battleResults, attacker, defender = null) => {
       );
     } else if (
       checkDefenderForLevel.userCharacter.rpgInfo.xp <
-      checkDefenderForLevel.userCharacter.rpgInfo.rank * 500
+      500 * Math.pow(1.1, checkDefenderForLevel.userCharacter.rpgInfo.rank)
     ) {
       const levelDownDefender = await Users.findByIdAndUpdate(
         checkDefenderForLevel._id,
         {
           $set: {
-            'userCharacter.rpgInfo.rank': Math.floor(
+            "userCharacter.rpgInfo.rank": Math.ceil(
               checkDefenderForLevel.userCharacter.rpgInfo.xp / 500
             )
           }
@@ -337,11 +339,11 @@ exports.createBattleLog = async (
   xpChange,
   battleStatus,
   receiver,
-  battleType = 'online'
+  battleType = "online"
 ) => {
   const message = `${user.username} fought ${receiver.username ||
     receiver.name} and ${battleStatus}`;
-  const messageType = 'battle';
+  const messageType = "battle";
 
   const messageInfoPackage = {
     messageType,
@@ -362,7 +364,7 @@ exports.createBattleLog = async (
 
   //   sets receiver for persisting if bot or online user
   let newMessage = new Notifications();
-  if (battleType === 'online') {
+  if (battleType === "online") {
     newMessage = new Notifications({
       messageType,
       sender: user._id,

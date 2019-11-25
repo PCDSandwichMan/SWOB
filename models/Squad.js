@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const SquadSchema = new mongoose.Schema({
   squadName: {
@@ -7,6 +7,19 @@ const SquadSchema = new mongoose.Schema({
     trim: true,
     unique: true
   },
+  joinRequests: [
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+      },
+      isVerified: {
+        type: Boolean,
+        required: true,
+        default: false
+      }
+    }
+  ],
   grandAdmiral: {
     type: String,
     required: true
@@ -26,16 +39,6 @@ const SquadSchema = new mongoose.Schema({
       type: String
     }
   ]
-  // TODO future implements
-  // globalRank: {
-  //   type: Number,
-  //   required: true,
-  //   trim: true
-  // },
-  // combinedXP: {},
-  // combinedWL: {},
-  // combinedLosses: {},
-  // combinedWins: {}
 });
 
-module.exports = mongoose.model('Squads', SquadSchema);
+module.exports = mongoose.model("Squads", SquadSchema);

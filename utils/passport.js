@@ -1,11 +1,11 @@
-const JwtStrategy = require('passport-jwt').Strategy;
-const LocalStrategy = require('passport-local').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const User = require('../models/User');
-const config = require('./config');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
+const JwtStrategy = require("passport-jwt").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+const User = require("../models/User");
+const config = require("./config");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const passport = require("passport");
 
 // Local Auth
 passport.use;
@@ -14,13 +14,19 @@ passport.use;
 passport.use(
   new JwtStrategy(
     {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken('Bearer'),
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken("Bearer"),
       secretOrKey: config.JWT_KEY,
       passReqToCallback: true
     },
     async (req, payload, done) => {
       try {
-        const user = await User.findById(payload.createdUser._id);
+        let userLocate;
+        if (payload.createdUser) {
+          userLocate = payload.createdUser;
+        } else {
+          userLocate = payload.foundUser;
+        }
+        const user = await User.findById(userLocate._id);
 
         if (!user) {
           return done(null, false);
@@ -40,7 +46,7 @@ passport.use(
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'email'
+      usernameField: "email"
     },
     async (username, password, done) => {
       try {
