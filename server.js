@@ -8,7 +8,6 @@ const helmet = require("helmet");
 const path = require("path");
 
 const app = express();
-const dev = app.get("env") !== "production";
 
 app.use(cors());
 app.use(helmet());
@@ -16,15 +15,15 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-if (!dev) {
+if (process.env.NODE === "production") {
   app.disable("x-powered-by");
-  app.use(compression());
+  // app.use(compression());
   app.use(morgan("common"));
 
-  app.use(express.static(path.resolve(__dirname, "build")));
+  app.use(express.static("client/build"));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "client","build", "index.html"));
   });
 }
 // -----
