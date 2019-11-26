@@ -1,0 +1,208 @@
+@import '../fonts/googleFonts.scss';
+@import '../_helpers/mixins';
+
+// - Background Setup
+#bgVideo-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  video {
+    min-width: 100%;
+    min-height: 100%;
+  }
+}
+
+#video-overlay {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: #111;
+  opacity: 0.55;
+}
+
+// - Login Container
+#login-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  color: white;
+}
+
+#login__form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #111;
+  opacity: 0.9;
+  padding: 20px 0;
+  border-radius: 1rem;
+  height: 43rem;
+  width: 40rem;
+  h1 {
+    font-size: 3.5rem;
+    font-family: $headerFont;
+    color: #f9e64d;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  form {
+    @include F(space-around, center, column);
+    width: 80%;
+    margin: 10% 0 0;
+    input {
+      width: 100%;
+      line-height: 2.4rem;
+      font-size: 1.8rem;
+      font-family: $bodyFont;
+      padding: 5px;
+      color: #f9e64d;
+      border: none;
+      border-bottom: 2px solid #999;
+      background: #00000000;
+      outline: none;
+      &:nth-child(odd) {
+        margin: 5px 0 25px;
+      }
+    }
+    button {
+      align-self: flex-start;
+      margin: 20px 0 0;
+      background: #00000000;
+      font-size: 1.3rem;
+      padding: 10px 20px;
+      color: #999;
+      outline: none;
+      border: 2px #999 solid;
+      transition: all 300ms ease-in-out;
+      &:hover {
+        cursor: pointer;
+        transform: scale(0.96);
+        color: red;
+        border-color: red;
+      }
+    }
+  }
+  a {
+    padding: 20px;
+    text-decoration: none;
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    transition: all 300ms ease-in-out;
+    &:hover {
+      cursor: pointer;
+      //   text-decoration: underline;
+      transform: scale(0.98);
+      color: red;
+    }
+  }
+}
+
+#page-selection {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-45%);
+  span {
+    color: white;
+  }
+  .selection__link {
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    transition: all 300ms ease-in-out;
+  }
+  .red-hov:hover {
+    cursor: pointer;
+    transform: scale(0.98);
+    color: red;
+  }
+  .green-hov:hover {
+    cursor: pointer;
+    transform: scale(0.98);
+    color: green;
+  }
+}
+
+.flashAlert {
+  align-self: flex-start;
+  color: red;
+  font-weight: 300;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+@media only screen and (max-device-width: 693px) {
+  #login__form-container {
+    height: 35rem;
+    width: 30rem;
+    h1 {
+      font-size: 3rem;
+    }
+    form {
+      input {
+        font-size: 1.2rem;
+      }
+      button {
+        font-size: 1.3rem;
+        padding: 10px 15px;
+      }
+    }
+  }
+  #page-selection {
+    bottom: 10px !important;
+    .selection__link {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 508px) {
+  #login__form-container {
+    height: 35rem;
+    width: 25rem;
+    h1 {
+      font-size: 2.5rem;
+    }
+    form {
+      button {
+        font-size: 1.1rem;
+        padding: 8px 15px;
+      }
+    }
+  }
+  #page-selection {
+    bottom: 10px !important;
+    white-space: nowrap;
+  }
+}
+
+@media only screen and (max-device-width: 418px) {
+  #login__form-container {
+    height: 35rem;
+    width: 21rem;
+    h1 {
+      font-size: 2.3rem;
+      margin-bottom: 4vh;
+    }
+    form {
+      button {
+        font-size: 1.1rem;
+        padding: 8px 15px;
+      }
+    }
+  }
+  #page-selection {
+    bottom: 10px !important;
+    white-space: nowrap;
+  }
+}

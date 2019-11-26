@@ -1,0 +1,130 @@
+@import "../fonts/googleFonts.scss";
+@import "../_helpers/mixins";
+@import "../_helpers/colorPallet";
+
+#squadCard {
+  background-color: rgb(201, 201, 201);
+  box-shadow: inset hsla(0, 0%, 15%, 1) 0 0px 0px 4px,
+    inset hsla(0, 0%, 15%, 0.8) 0 -1px 5px 4px,
+    inset hsla(0, 0%, 0%, 0.25) 0 -1px 0px 7px,
+    inset hsla(0, 0%, 100%, 0.7) 0 2px 1px 7px,
+    hsla(0, 0%, 0%, 0.15) 0 -5px 6px 4px, hsla(0, 0%, 100%, 0.5) 0 5px 6px 4px; /* outer HL */
+  position: relative;
+  margin: 0;
+  @include F(flex-start, flex-start, column);
+  height: 60%;
+  width: 30vw;
+  h2,
+  h3 {
+    margin: 0;
+    padding: 0;
+    text-shadow: hsla(0, 0%, 40%, 0.5) 0 -1px 0,
+      hsla(0, 0%, 100%, 0.6) 0 2px 1px;
+  }
+  h1 {
+    text-shadow: hsla(0, 0%, 40%, 0.5) 0 -1px 0,
+      hsla(0, 0%, 100%, 0.6) 0 2px 1px;
+    font-size: 1.7rem;
+    margin: 10px;
+    color: $dashboardText;
+  }
+}
+
+.squadCard-userTag {
+  @include F(flex-start, center);
+  margin: 10px;
+  h3 {
+    color: $headerColor;
+  }
+  h3 span {
+    color: $dashboardText;
+    margin: 0 10px;
+  }
+}
+
+#squadCard__new-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+}
+
+#inputSquad {
+  background: #00000000;
+  border: none;
+  border-bottom: 1px solid $dashboardText;
+  color: $headerColor;
+  font-size: 2rem;
+  padding-left: 7px;
+  overflow: hidden;
+  outline: none;
+  &::placeholder {
+    color: rgba(109, 109, 109, 0.288);
+  }
+}
+
+#squadCard-buttons {
+  margin: auto 0 15px 0;
+  width: 100%;
+  @include F(space-evenly);
+  div {
+    border: 1px black solid;
+    background: #921f1b;
+    padding: 15px 30px;
+    transition: all 100ms ease-in-out;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.03);
+      background: firebrick;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+#creation__btn-container {
+  display: flex;
+  align-items: center;
+  div {
+    &:nth-child(even) {
+      background: green !important;
+      &:hover {
+        background: #47e047 !important;
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 1200px) {
+  #inputSquad {
+    font-size: 1.5rem;
+    padding-left: 7px;
+  }
+}
+
+@media only screen and (max-device-width: 1000px) {
+  #squadCard {
+    height: 90%;
+    width: 40vw;
+    margin: 0px 10px;
+  }
+}
+
+@media only screen and (max-device-width: 700px) {
+  #squadCard {
+    height: 50vh;
+    width: 75vw;
+    margin: 0px 0px 5vh;
+  }
+}
+
+@media only screen and (max-device-width: 543px) {
+  #squadCard {
+    width: 90vw;
+    margin: 0px 0px 5vh;
+  }
+}

@@ -1,0 +1,208 @@
+@import "../fonts/googleFonts.scss";
+@import "../_helpers/mixins";
+@import "../_helpers/colorPallet";
+
+#battleCard {  
+  background-color: rgb(201, 201, 201);
+  box-shadow: inset hsla(0, 0%, 15%, 1) 0 0px 0px 4px,
+    inset hsla(0, 0%, 15%, 0.8) 0 -1px 5px 4px,
+    inset hsla(0, 0%, 0%, 0.25) 0 -1px 0px 7px,
+    inset hsla(0, 0%, 100%, 0.7) 0 2px 1px 7px,
+    hsla(0, 0%, 0%, 0.15) 0 -5px 6px 4px, hsla(0, 0%, 100%, 0.5) 0 5px 6px 4px; 
+  height: 80vh;
+  width: 30vw;
+  margin: 30px 20px;
+  padding: 10px;
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.battleCard__container {
+  background: $dashboardBlack;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid #444;
+  height: 30%;
+  padding: 5px 10px;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px firebrick;
+  }
+  div {
+    @include F(space-between, center, row);
+    white-space: nowrap;
+    margin: 5px 0;
+  }
+  h1 {
+    color: $dashboardText;
+    font-size: 1.15vw;
+    font-weight: 500;
+  }
+  h2 {
+    color: green;
+    font-size: 1.15vw;
+    font-weight: 500;
+  }
+}
+
+.lower {
+  margin: 15px 0;
+  height: 26%;
+  div {
+    @include F(space-evenly, center);
+    flex-wrap: wrap;
+  }
+  #battleCard__container__statModifier {
+    @include F(space-between, center);
+    flex-wrap: nowrap;
+    width: 100%;
+    h3 {
+      padding: 0 0 0 5px;
+    }
+    input:hover {
+      cursor: pointer;
+    }
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  h3 {
+    color: $dashboardText;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+}
+
+#battleCard__battleButtons {
+  @include F($j: space-evenly);
+  margin: 20px 0;
+  div {
+    padding: 5px 15px;
+    border: 1px solid #111;
+    background: rgb(146, 22, 22);
+    transition: all 80ms ease-in-out;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+      background: red;
+    }
+    a {
+      text-decoration: none;
+      color: #111;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 1255px) {
+  .battleCard__container {
+    div {
+      margin: 10px 0px;
+    }
+    h1 {
+      font-size: 1vw;
+    }
+    h2 {
+      font-size: 1.15vw;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 1150px) {
+  #battleCard__battleButtons {
+    div {
+      a {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 1070px) {
+  .battleCard__container {
+    h1 {
+      font-size: 1.1vw;
+    }
+  }
+  #battleCard__battleButtons {
+    div {
+      a {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 1000px) {
+  #battleCard {
+    width: 40vw;
+  }
+  .battleCard__container {
+    h1 {
+      font-size: 1.4vw;
+    }
+    h2 {
+      font-size: 1.4vw;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 800px) {
+  #battleCard {
+    width: 45vw;
+    margin: 30px 5px;
+  }
+}
+
+@media only screen and (max-device-width: 700px) {
+  #battleCard {
+    width: 75vw;
+  }
+  .battleCard__container {
+    h1 {
+      font-size: 2.4vw;
+    }
+    h2 {
+      font-size: 2.4vw;
+    }
+  }
+
+  #battleCard__battleButtons {
+    div {
+      a {
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 543px) {
+  #battleCard {
+    width: 90vw;
+  }
+}
+
+@media only screen and (max-device-width: 500px) {
+  .battleCard__container {
+    h1 {
+      font-size: 2.8vw;
+    }
+    h2 {
+      font-size: 2.8vw;
+    }
+  }
+}

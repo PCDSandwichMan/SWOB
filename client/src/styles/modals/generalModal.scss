@@ -1,0 +1,67 @@
+@import '../fonts/googleFonts.scss';
+@import '../_helpers/mixins';
+@import '../_helpers/colorPallet';
+@import '../modals//modalStates/battleScreen.scss';
+
+h1,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.hide {
+  display: none !important;
+}
+
+#generalModal {
+  z-index: 10;
+  overflow: hidden;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  color: #fff;
+}
+
+#generalModal__overlay {
+  background: #111111a9;
+  position: fixed;
+  filter: blur(10px);
+  height: 100%;
+  width: 100%;
+}
+
+#generalModal__container {
+  background: rgb(185, 185, 185);
+  box-shadow: 2px 2px 4px #111;
+  position: relative;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80%;
+  width: 80%;
+  #container__close {
+    @include F();
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 2.5px 10px;
+    transform: translateX(100%);
+    background: firebrick;
+    transition: all 80ms ease-in-out;
+    &:hover {
+      cursor: pointer;
+      background: red;
+      h1 {
+        color: #e6e6e6;
+      }
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: black;
+    }
+  }
+}
+
+ 

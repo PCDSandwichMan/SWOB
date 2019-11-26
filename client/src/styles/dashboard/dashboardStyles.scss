@@ -1,0 +1,39 @@
+@import '../fonts/googleFonts.scss';
+@import '../_helpers/mixins';
+@import '../_helpers/colorPallet';
+
+#dashboard__main {
+  @include F(space-around, center, row);
+  background: url('../../images/dashboardBg.jpeg') no-repeat fixed;
+  background-size: cover;
+  height: 86vh;
+}
+
+#dashboard__global {
+  @include F(space-evenly, center, column);
+  height: 86vh;
+}
+
+#dashboard__user {
+  @include F(space-around, center, row);
+}
+
+@media only screen and (max-device-width: 1000px) {
+  #dashboard__main {
+    @include F(space-around, center, column);
+  }
+  #dashboard__global {
+    @include F(space-evenly, flex-start, row);
+    height: 50vh;
+  }
+}
+
+@media only screen and (max-device-width: 700px) {
+  #dashboard__user {
+    @include F(space-around, center, column);
+  }
+  #dashboard__global {
+    @include F(space-evenly, center, column);
+    height: auto;
+  }
+}

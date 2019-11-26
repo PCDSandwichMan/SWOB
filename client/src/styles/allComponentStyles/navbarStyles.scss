@@ -1,0 +1,89 @@
+@import "../fonts/googleFonts.scss";
+@import "../_helpers/mixins";
+@import "../_helpers/colorPallet";
+
+#navbar {
+  position: relative;
+  background-color: rgb(201, 201, 201);
+  box-shadow: inset hsla(0, 0%, 15%, 1) 0 0px 0px 4px,
+    inset hsla(0, 0%, 15%, 0.8) 0 -1px 5px 4px,
+    inset hsla(0, 0%, 0%, 0.25) 0 -1px 0px 7px,
+    inset hsla(0, 0%, 100%, 0.7) 0 2px 1px 7px,
+    hsla(0, 0%, 0%, 0.15) 0 -5px 6px 4px, hsla(0, 0%, 100%, 0.5) 0 5px 6px 4px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    color: $headerColor;
+    font-family: $headerFont;
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px #111;
+  }
+  #navbar__logout {
+    position: absolute;
+    left: 1%;
+    font-size: 2rem;
+    padding: 5px;
+    transform: scaleX(-1);
+    color: #333;
+    transition: all 80ms ease-in;
+    &:hover {
+      cursor: pointer;
+      text-shadow: 2px 2px 4px #111;
+      color: #fff;
+      transform: scaleX(-1) translateX(5%);
+    }
+  }
+  div {
+    position: absolute;
+    right: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      padding: 5px 10px;
+      font-size: 2rem;
+      color: #333;
+      transition: all 80ms ease-in;
+      &:hover {
+        cursor: pointer;
+        color: #fff;
+        text-shadow: 2px 2px 4px #111;
+        transform: scale(1.05) translateY(-5%);
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 800px) {
+  #navbar {
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 650px) {
+  #navbar {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 520px) {
+  #navbar {
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 380px) {
+  #navbar {
+    h1 {
+      font-size: 1.2rem;
+    }
+  }
+}

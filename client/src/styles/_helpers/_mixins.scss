@@ -1,0 +1,6 @@
+@mixin F($j:center, $a:center, $d:row) {
+  display: flex;
+  flex-direction: $d;
+  justify-content: $j;
+  align-items: $a;
+}

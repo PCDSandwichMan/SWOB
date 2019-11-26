@@ -1,0 +1,110 @@
+#squadInfo {
+  background: linear-gradient(#111111a1, #111111a1),
+    url("../../../images/squadInfoBg.jpg") no-repeat center;
+  min-height: 100%;
+  padding: 40px;
+
+  table {
+    tbody {
+      &:nth-child(even) {
+        background: rgba(235, 235, 235, 0.103);
+      }
+      td {
+        padding: 10px 0;
+      }
+    }
+  }
+}
+
+@media (max-device-width: 800px) {
+  #squadInfo {
+    table {
+      tbody {
+        td {
+          h3 {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-device-width: 800px) {
+  #squadInfo {
+    table {
+      th {
+        h4 {
+          font-size: 1rem;
+        }
+      }
+      tbody {
+        td {
+          h3 {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-device-width: 646px) {
+  #squadInfo {
+    table {
+      th {
+        h4 {
+          font-size: 0.8rem;
+        }
+      }
+      tbody {
+        td {
+          h3 {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-device-width: 550px) {
+  #squadInfo {
+    table {
+      th {
+        h4 {
+          font-size: 0.7rem;
+        }
+      }
+      tbody {
+        td {
+          h3 {
+            font-size: 0.6rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-device-width: 490px) {
+  #squadInfo {
+    h1 {
+      font-size: 1.5rem;
+    }
+    table {
+      th {
+        h4 {
+          font-size: 0.7rem;
+        }
+      }
+      tbody {
+        td {
+          h3 {
+            font-size: 0.7rem;
+          }
+        }
+      }
+    }
+  }
+}

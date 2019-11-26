@@ -1,0 +1,213 @@
+@import "../../fonts/googleFonts.scss";
+@import "../../_helpers/mixins";
+@import "../../_helpers/colorPallet";
+
+#command-panel {
+  position: relative;
+  border: 1px red solid;
+  height: 100%;
+  padding: 0vw 8vw;
+  background: linear-gradient(#11111170, #11111170),
+    url("../../../images/cmdPnBg.jpg") no-repeat center;
+  background-size: cover;
+}
+
+.command-panel__sub {
+  background: #111111ee;
+  width: 100%;
+  height: 40%;
+  margin: 30px 0;
+}
+
+.sub__field {
+  display: flex;
+  h3 {
+    padding: 0 10px 0 0;
+  }
+}
+
+.top-com {
+  padding: 20px;
+}
+
+#join-request {
+  display: flex;
+  align-items: center;
+  margin: 10px auto;
+  h4 {
+    margin: 0 10px;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+#request-verify {
+  transition: all 80ms ease-in;
+  font-size: 1.5rem;
+  margin: 0 5px;
+  padding: 3px;
+  &:hover {
+    cursor: pointer;
+    color: lawngreen;
+  }
+}
+#request-reject {
+  transition: all 80ms ease-in;
+  font-size: 1.5rem;
+  margin: 0 5px;
+  padding: 3px;
+  &:hover {
+    cursor: pointer;
+    color: red;
+  }
+}
+
+#sub__name {
+  background: #00000000;
+  border: none;
+  border-bottom: 1px solid $dashboardText;
+  outline: none;
+  color: #f9e64d;
+  font-size: 1rem;
+  padding: 0 5px;
+}
+
+#com-panel__save {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 15px;
+  color: #978a25;
+  border: 1px solid #978a25;
+  transition: all 100ms ease-in-out;
+  &:hover {
+    cursor: pointer;
+    color: #ffe100;
+    background-color: #ffe1000e;
+    border-color: #ffe100;
+  }
+}
+
+#cmdPnl-delete {
+  background: #00000000;
+  outline: none;
+  border: 1px firebrick solid;
+  color: firebrick;
+  padding: 3px 5px;
+  transition: 150ms all ease-in-out;
+  &:hover {
+    cursor: pointer;
+    color: red;
+    border-color: red;
+    background: #ff00002c;
+  }
+}
+
+.marked {
+  color: red !important;
+  border-color: red !important;
+  background: #ff00002c !important;
+}
+
+@media only screen and (max-device-width: 850px) {
+  #command-panel {
+    th {
+      h4 {
+        font-size: 1.1rem;
+      }
+    }
+    td {
+      h3 {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 742px) {
+  #command-panel {
+    th {
+      h4 {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 658px) {
+  .command-panel__sub {
+    margin: 20px 0;
+  }
+  #command-panel {
+    padding: 0vw 1vw;
+  }
+}
+
+@media only screen and (max-device-width: 516px) {
+  .sub__field {
+    h3 {
+      font-size: 1rem;
+    }
+  }
+
+  #command-panel {
+    th {
+      h4 {
+        font-size: 0.8rem;
+      }
+    }
+    td {
+      h3 {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  #cmdPnl-delete {
+    padding: 2px 3px;
+  }
+}
+
+@media only screen and (max-device-width: 458px) {
+  .sub__field {
+    h3 {
+      font-size: 0.8rem;
+    }
+  }
+
+  #sub__name {
+    font-size: 0.8rem;
+  }
+
+  #command-panel {
+    th {
+      h4 {
+        font-size: 0.7rem;
+      }
+    }
+    td {
+      h3 {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  #cmdPnl-delete {
+    padding: 2px 3px;
+  }
+}
+
+@media only screen and (max-device-width: 402px) {
+  .resize-field {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  #sub__name {
+    margin: 10px 0;
+    font-size: 0.9rem;
+  }
+}
