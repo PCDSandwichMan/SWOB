@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-if (process.env.NODE === "production") {
+if (process.env.NODE_ENV === 'production') {
   app.disable("x-powered-by");
   // app.use(compression());
   app.use(morgan("common"));
