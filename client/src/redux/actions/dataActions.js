@@ -10,7 +10,7 @@ const authSet = token => {
 // - login user
 export const loginUser = userData => dispatch => {
   axios
-    .post(`/data/login`, userData)
+    .post(`${constants.BASE_URL_DEV}/data/login`, userData)
     .then(userRes => {
       authSet(userRes.data.token);
       dispatch({
@@ -40,7 +40,7 @@ export const loginUser = userData => dispatch => {
 // - Create new user
 export const createUser = userData => dispatch => {
   axios
-    .post(`/user/new`, userData)
+    .post(`${constants.BASE_URL_DEV}/user/new`, userData)
     .then(userRes => {
       authSet(userRes.data.token);
       dispatch({
@@ -68,7 +68,7 @@ export const createUser = userData => dispatch => {
 // - Get Battle Messages For User
 export const getBattleMessages = type => dispatch => {
   axios
-    .get(`/notifications/messages/${type}`)
+    .get(`${constants.BASE_URL_DEV}/notifications/messages/${type}`)
     .then(battleMessages => {
       dispatch({
         type: constants.GET_ALL_BATTLE_MESSAGES,
@@ -87,7 +87,7 @@ export const getBattleMessages = type => dispatch => {
 // - Gets LeaderBoard users
 export const getLeaderBoardUsers = () => dispatch => {
   axios
-    .get(`/data/leaderboard`)
+    .get(`${constants.BASE_URL_DEV}/data/leaderboard`)
     .then(data => {
       dispatch({
         type: constants.GET_LEADERBOARD,
@@ -107,7 +107,7 @@ export const getLeaderBoardUsers = () => dispatch => {
 export const handleBotBattle = () => async dispatch => {
   let success;
   const botBattleSave = await axios
-    .post(`/notifications/battle`, {
+    .post(`${constants.BASE_URL_DEV}/notifications/battle`, {
       battleType: "bot"
     })
     .then(result => {
@@ -124,7 +124,7 @@ export const handleBotBattle = () => async dispatch => {
 export const handleOnlineBattle = () => async dispatch => {
   let success;
   const botBattleSave = await axios
-    .post(`/notifications/battle`, {
+    .post(`${constants.BASE_URL_DEV}/notifications/battle`, {
       battleType: "online"
     })
     .then(result => {
@@ -140,7 +140,7 @@ export const handleOnlineBattle = () => async dispatch => {
 // - Used in modal for possible matches
 export const getPossibleMatchup = () => dispatch => {
   axios
-    .get(`/data/getBattleUsers`)
+    .get(`${constants.BASE_URL_DEV}/data/getBattleUsers`)
     .then(users => {
       dispatch({
         type: constants.GET_POTENTIAL_BATTLES,
@@ -159,7 +159,7 @@ export const getPossibleMatchup = () => dispatch => {
 // - Get user squad
 export const getSquad = () => dispatch => {
   axios
-    .get(`/squad/get`)
+    .get(`${constants.BASE_URL_DEV}/squad/get`)
     .then(res => {
       dispatch({
         type: constants.GET_SQUAD,
@@ -175,7 +175,7 @@ export const createSquad = squadData => async dispatch => {
   let success;
 
   const handleCreations = await axios
-    .post(`/squad/create`, { squadName: squadData })
+    .post(`${constants.BASE_URL_DEV}/squad/create`, { squadName: squadData })
     .then(data => {
       console.log(data);
       success = true;
@@ -198,7 +198,7 @@ export const toggleModal = modalState => dispatch => {
 //  - Get sqaud info for command board
 export const getCmdBrdInfo = () => dispatch => {
   axios
-    .get(`/squad/command-panel-info`)
+    .get(`${constants.BASE_URL_DEV}/squad/command-panel-info`)
     .then(res => {
       // console.log(res.data);
       dispatch({
@@ -221,7 +221,7 @@ export const saveSquadChanges = squadChanges => async dispatch => {
   }
   let success;
   const saveSquadChanges = await axios
-    .post(`/squad/update-squad`, {
+    .post(`${constants.BASE_URL_DEV}/squad/update-squad`, {
       squadName: squadChanges.squadName,
       removeMembers: squadChanges.removeMembers
     })
@@ -239,7 +239,7 @@ export const saveSquadChanges = squadChanges => async dispatch => {
 export const reqPasswordReset = email => async dispatch => {
   let success = false;
   const sendReset = await axios
-    .post(`/data/reset/`, { email })
+    .post(`${constants.BASE_URL_DEV}/data/reset/`, { email })
     .then(res => {
       console.log(res.data);
       if (res.data.reset === "reset verified and sent") success = true;
@@ -252,7 +252,7 @@ export const reqPasswordReset = email => async dispatch => {
 export const checkResetToken = paramToken => async dispatch => {
   let success = false;
   const checkToken = await axios
-    .get(`/data/reset/${paramToken}`)
+    .get(`${constants.BASE_URL_DEV}/data/reset/${paramToken}`)
     .then(res => {
       if (res.data.token) success = true;
     })
@@ -264,7 +264,7 @@ export const checkResetToken = paramToken => async dispatch => {
 export const postPasswordReset = (passwords, paramToken) => async dispatch => {
   let success = false;
   const sendReset = await axios
-    .post(`/data/reset/${paramToken}`, {
+    .post(`${constants.BASE_URL_DEV}/data/reset/${paramToken}`, {
       password: passwords.password,
       confirmPassword: passwords.confirmPassword
     })
@@ -283,7 +283,7 @@ export const postPasswordReset = (passwords, paramToken) => async dispatch => {
 export const searchForSquad = squadName => async dispatch => {
   let response = {};
   const handleSearch = await axios
-    .get(`/squad/${squadName}`)
+    .get(`${constants.BASE_URL_DEV}/squad/${squadName}`)
     .then(res => {
       console.log(res.data);
       response = res.data;
@@ -302,7 +302,7 @@ export const searchForSquad = squadName => async dispatch => {
 export const sendJoinRequest = squadName => dispatch => {
   console.log(squadName);
   axios
-    .post(`/squad/join/request`, {
+    .post(`${constants.BASE_URL_DEV}/squad/join/request`, {
       squadName
     })
     .then(res => {
@@ -313,7 +313,7 @@ export const sendJoinRequest = squadName => dispatch => {
 
 export const handleJoinRequestResponse = decisionData => async dispatch => {
   const handleDecision = await axios
-    .post(`/squad/handle-request`, {
+    .post(`${constants.BASE_URL_DEV}/squad/handle-request`, {
       requesterId: decisionData.userId,
       decision: decisionData.decision
     })
@@ -327,14 +327,14 @@ export const handleJoinRequestResponse = decisionData => async dispatch => {
 
 export const removeUserFromSquad = users => dispatch => {
   axios
-    .post(`/squad/delete/members`, { userIds: users })
+    .post(`${constants.BASE_URL_DEV}/squad/delete/members`, { userIds: users })
     .then(res => res.data)
     .catch(err => console.log(err));
 };
 
 export const squadInformationPanel = () => dispatch => {
   axios
-    .get(`/squad/squad-information/panel`)
+    .get(`${constants.BASE_URL_DEV}/squad/squad-information/panel`)
     .then(res => {
       dispatch({
         type: constants.GET_SQUAD_INFORMATION,

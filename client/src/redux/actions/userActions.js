@@ -19,7 +19,7 @@ export const refreshCharacter = () => dispatch => {
     "token"
   );
   axios
-    .get(`/user/dashboard-data`)
+    .get(`${constants.BASE_URL_DEV}/user/dashboard-data`)
     .then(userData => {
       axios
         .get(
@@ -82,7 +82,7 @@ export const getUserImage = character => dispatch => {
 // - Refresh level after battle
 export const levelRefresh = () => dispatch => {
   axios
-    .get(`/user/level`)
+    .get(`${constants.BASE_URL_DEV}/user/level`)
     .then(res => {
       console.log(res.data);
       dispatch({

@@ -15,17 +15,13 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-if (process.env.NODE_ENV === 'production') {
+// - Sets for prod (specified before for morgan set before routes)
+if (process.env.NODE_ENV === "production") {
   app.disable("x-powered-by");
-  // app.use(compression());
+  app.use(compression());
   app.use(morgan("common"));
-
-  app.use(express.static(path.join(__dirname, "client", "build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-  });
 }
-// -----
+
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -50,6 +46,14 @@ database.once("open", () => {
   app.use("/notifications", notificationRoute);
   app.use("/squad", squadRoute);
 
+  // - Sets for prod (specified after so the API routes can catch first if found)
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "client", "build")));
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+    });
+  }
+
   // Route 404 Fallback
   app.use((req, res, next) => {
     if (req.accepts("json")) {
@@ -58,7 +62,6 @@ database.once("open", () => {
     next();
   });
 
-  
   // Server Connection
   app.listen(config.PORT, () =>
     console.log(`app listening on PORT: ${config.PORT}`)

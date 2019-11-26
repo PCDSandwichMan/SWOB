@@ -1,6 +1,6 @@
 const constants = {
   BASE_URL_DEV: "http://localhost:5050",
-  BASE_URL_PROD: "https://swob-swapi.herokuapp.com",
+  BASE_URL_PROD: "",
   LOGIN: "user:login",
   REFRESH: "user:refreshUSer",
   REFRESH_CHARACTER: "user:refreshCharacter",

@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getLeaderBoardUsers } from '../../redux/actions/dataActions';
-import '../../styles/dashboard/leaderBoardStyles.scss';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { getLeaderBoardUsers } from "../../redux/actions/dataActions";
+import "../../styles/dashboard/leaderBoardStyles.scss";
 
 function LeaderBoard(props) {
   useEffect(() => {
     props.getLeaderBoardUsers();
-  }, []);
+  }, [props.userXpChange]);
 
   return (
     <div id="leaderBoard">
@@ -52,14 +52,12 @@ function LeaderBoard(props) {
 }
 
 const mapStateToProps = state => ({
-  leaderboardUsers: state.Data.leaderboard
+  leaderboardUsers: state.Data.leaderboard,
+  userXpChange: state.User.rpgInfo ? state.User.rpgInfo.xp : state.User.rpgInfo
 });
 
 const mapActionsToProps = {
   getLeaderBoardUsers
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(LeaderBoard);
+export default connect(mapStateToProps, mapActionsToProps)(LeaderBoard);
