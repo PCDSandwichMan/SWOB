@@ -4,10 +4,10 @@ const morgan = require("morgan");
 const cors = require("cors");
 const config = require("./utils/config");
 const helmet = require("helmet");
-const dev = app.get("env") !== "production";
 const path = require("path");
 
 const app = express();
+const dev = app.get("env") !== "production";
 
 app.use(cors());
 app.use(helmet());
@@ -20,10 +20,10 @@ if (!dev) {
   // npm compression ?
   app.use(morgan("common"));
 
-  app.use(express.static(path.resolve(__dirname, "build")));
+  app.use(express.static(path.resolve(__dirname, "client", "build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
 
