@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
+const compression = require("compression");
 const config = require("./utils/config");
 const helmet = require("helmet");
 const path = require("path");
@@ -17,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 
 if (!dev) {
   app.disable("x-powered-by");
-  // npm compression ?
+  app.use(compression());
   app.use(morgan("common"));
 
   app.use(express.static(path.resolve(__dirname, "client", "build")));
@@ -65,6 +66,5 @@ database.once("open", () => {
   );
 });
 
-
 // ,
-    // "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm rebuild node-sass --prefix client && npm run build --prefix client"
+// "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm rebuild node-sass --prefix client && npm run build --prefix client"
