@@ -26,7 +26,7 @@ if (!dev) {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
-
+// -
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
