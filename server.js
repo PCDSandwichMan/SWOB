@@ -21,6 +21,9 @@ if (process.env.NODE === "production") {
   app.use(morgan("common"));
 
   app.use(express.static(path.join(__dirname, "client", "build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
 }
 // -----
 mongoose.connect(config.MONGODB_URI, {
@@ -55,9 +58,7 @@ database.once("open", () => {
     next();
   });
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-  });
+  
   // Server Connection
   app.listen(config.PORT, () =>
     console.log(`app listening on PORT: ${config.PORT}`)
