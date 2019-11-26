@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1e5387fc.chunk.css",
+    "main.js": "/static/js/main.232b2e14.chunk.js",
+    "main.js.map": "/static/js/main.232b2e14.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.985e6003.js",
+    "runtime-main.js.map": "/static/js/runtime-main.985e6003.js.map",
+    "static/js/2.026720b7.chunk.js": "/static/js/2.026720b7.chunk.js",
+    "static/js/2.026720b7.chunk.js.map": "/static/js/2.026720b7.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.1f787517c153ef8c861c0f84e20edf25.js": "/precache-manifest.1f787517c153ef8c861c0f84e20edf25.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.1e5387fc.chunk.css.map": "/static/css/main.1e5387fc.chunk.css.map",
+    "static/media/newAccountStyles.scss": "/static/media/accountCreation-bg.391699b0.jpg",
+    "static/media/commandPanel.scss": "/static/media/cmdPnBg.1f61a2d2.jpg",
+    "static/media/dashboardStyles.scss": "/static/media/dashboardBg.ba315146.jpeg",
+    "static/media/login-bg.mov": "/static/media/login-bg.1be3217a.mov",
+    "static/media/resetStyles.scss": "/static/media/resetBg.df13dc0f.jpg",
+    "static/media/rankPlaceholder.png": "/static/media/rankPlaceholder.d543c4b6.png",
+    "static/media/squadInformation.scss": "/static/media/squadInfoBg.ea7e4d18.jpg",
+    "static/media/searchPanel.scss": "/static/media/squadSearchBg.451483d5.jpg",
+    "static/media/yodaPlaceholder.jpg": "/static/media/yodaPlaceholder.861b7688.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.985e6003.js",
+    "static/js/2.026720b7.chunk.js",
+    "static/css/main.1e5387fc.chunk.css",
+    "static/js/main.232b2e14.chunk.js"
+  ]
+}
