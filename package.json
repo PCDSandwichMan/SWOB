@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "This is for a MERN stack application that lets user's have a profile and store data from swapi",
   "main": "server.js",
+  "engines": {
+    "node": "11.14.0"
+  }
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
