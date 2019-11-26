@@ -21,11 +21,11 @@ if (!dev) {
   app.use(compression());
   app.use(morgan("common"));
 
-  // app.use(express.static(path.resolve(__dirname, "client", "build")));
+  app.use(express.static(path.resolve(__dirname, "build")));
 
-  // app.get("*", (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  // });
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  });
 }
 // -----
 mongoose.connect(config.MONGODB_URI, {
