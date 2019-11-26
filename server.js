@@ -17,8 +17,10 @@ app.use(express.urlencoded({ extended: false }));
 
 // - Sets for prod (specified before for morgan set before routes)
 if (process.env.NODE_ENV === "production") {
+  // Turn on off access to the API engin type and version
   app.disable("x-powered-by");
   app.use(compression());
+  // Makes logs much less user friendly
   app.use(morgan("common"));
 }
 
