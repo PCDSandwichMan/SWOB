@@ -6,18 +6,26 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const async = require("async");
 const { validateBody, schemas } = require("../utils/validJoi");
+const passport = require("passport");
+const passportConfig = require("../utils/passport");
 
 // Login User User
-router.post("/login", async (req, res) => {
-  const validateLogin = await validators.validateLoginData(req.body);
-  if (!validateLogin.valid) {
-    return res.status(400).json(validateLogin.errors);
+router.post(
+  "/login",
+  validateBody(schemas.checkLogin),
+  passport.authenticate("local", { session: false }),
+  async (req, res) => {
+    const getToken = await validators.getToken(req.user);
+    const infoResponse = {
+      username: req.user.username,
+      character: req.user.userCharacter.characterName
+    };
+    res.status(200).json({ token: getToken, infoResponse });
   }
-  res.status(200).json(validateLogin.userResponse);
-});
+);
 
 // Password Reset Validate and Assign
-router.post("/reset", validateBody(schemas.reqReset) ,async (req, res) => {
+router.post("/reset", validateBody(schemas.reqReset), async (req, res) => {
   async.waterfall(
     [
       function(done) {
@@ -35,7 +43,6 @@ router.post("/reset", validateBody(schemas.reqReset) ,async (req, res) => {
           }
           user.resetPasswordToken = token;
           user.resetPasswordExpires = Date.now() + 3600000; // 1hr
-          // console.log(user);
           const newUser = new User(user);
           newUser.save(err => {
             if (err) console.log(err);
@@ -97,7 +104,7 @@ router.get("/reset/:token", (req, res) => {
 });
 
 // Password Reset if token and user verified
-router.post("/reset/:token", validateBody(schemas.postReset) , (req, res) => {
+router.post("/reset/:token", validateBody(schemas.postReset), (req, res) => {
   async.waterfall(
     [
       function(done) {
@@ -197,7 +204,6 @@ router.get("/getBattleUsers", async (req, res) => {
   if (!tokenUser) {
     return res.status(400).json({ error: "token is invalid" });
   }
-  // console.log(tokenUser.foundUser);
 
   // Tries to find users in the ±5 rank range
   let randomOnlineUser;
@@ -205,11 +211,11 @@ router.get("/getBattleUsers", async (req, res) => {
     $and: [
       {
         "userCharacter.rpgInfo.rank": {
-          $gte: tokenUser.foundUser.userCharacter.rpgInfo.rank - 5,
-          $lte: tokenUser.foundUser.userCharacter.rpgInfo.rank + 5
+          $gte: tokenUser.user.userCharacter.rpgInfo.rank - 5,
+          $lte: tokenUser.user.userCharacter.rpgInfo.rank + 5
         }
       },
-      { username: { $ne: tokenUser.foundUser.username } }
+      { username: { $ne: tokenUser.user.username } }
     ]
   });
 
@@ -222,7 +228,7 @@ router.get("/getBattleUsers", async (req, res) => {
     randomOnlineUser = await User.findOne().skip(random);
     if (
       !nameCheck.includes(randomOnlineUser.username) &&
-      randomOnlineUser.username !== tokenUser.foundUser.username
+      randomOnlineUser.username !== tokenUser.user.username
     ) {
       randomUsers.push(randomOnlineUser);
       nameCheck.push(randomOnlineUser.username);

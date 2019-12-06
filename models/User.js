@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema(
     userCharacter: {
       characterName: {
         type: String,
-        default: 'Jar Jar Binks'
+        default: "Jar Jar Binks"
       },
       rpgInfo: {
         rank: {
@@ -88,9 +88,9 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre("save", function(next) {
   let user = this;
-  if (this.isModified('password') || this.isNew) {
+  if (this.isModified("password") || this.isNew) {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(this.password, salt, (hashError, hash) => {
         if (hashError) {
@@ -112,4 +112,4 @@ UserSchema.methods.comparePasswords = function(password, cb) {
   });
 };
 
-module.exports = mongoose.model('Users', UserSchema);
+module.exports = mongoose.model("Users", UserSchema);

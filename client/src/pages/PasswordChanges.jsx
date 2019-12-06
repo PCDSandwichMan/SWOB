@@ -85,11 +85,11 @@ function PasswordChanges(props) {
             <button type="submit">Submit Change</button>
           </form>
           <div id="page-selection">
-            <Link class="selection__link red-hov" to="/">
+            <Link className="selection__link red-hov" to="/">
               Sign In
             </Link>
             <span>|</span>
-            <Link class="selection__link green-hov" to="/create-account">
+            <Link className="selection__link green-hov" to="/create-account">
               Create Account
             </Link>
           </div>

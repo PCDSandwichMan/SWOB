@@ -42,8 +42,25 @@ module.exports = {
         .error(new Error("must include email for reset"))
     }),
     postReset: joi.object().keys({
-      password: joi.string().required().error(new Error("must include both passwords")),
-      confirmPassword: joi.string().required().error(new Error("must include both passwords"))
+      password: joi
+        .string()
+        .required()
+        .error(new Error("must include both passwords")),
+      confirmPassword: joi
+        .string()
+        .required()
+        .error(new Error("must include both passwords"))
+    }),
+    checkLogin: joi.object().keys({
+      email: joi
+        .string()
+        .email()
+        .required()
+        .error(new Error("email must be included")),
+      password: joi
+        .string()
+        .required()
+        .error(new Error("password must be included"))
     })
   }
 };

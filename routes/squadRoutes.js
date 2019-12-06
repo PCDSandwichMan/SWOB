@@ -63,7 +63,6 @@ router.get(
       if (!getUserSquad) {
         res.status(404).json({ squad: "squad not found for this user" });
       }
-
       let grunt = [],
         captain = [],
         lieutenantCommander = [];
@@ -96,7 +95,7 @@ router.get(
         grunt,
         captain,
         lieutenantCommander
-      };
+      }; 
       res.status(200).json(response);
     } catch (err) {
       console.log(err);

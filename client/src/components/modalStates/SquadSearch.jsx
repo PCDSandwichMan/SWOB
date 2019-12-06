@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 // Actions
 import {
   searchForSquad,
-  sendJoinRequest,
+  sendJoinRequest
 } from "../../redux/actions/dataActions";
 // Styles
 import "../../styles/modals/modalStates/searchPanel.scss";
@@ -11,23 +11,26 @@ import "../../styles/modals/modalStates/searchPanel.scss";
 function SquadSearch(props) {
   const [squads, setSquads] = useState({
     squadName: "",
-    allSquads: []
+    allSquads: [],
+    err: {}
   });
 
   const handleSquadSearch = async e => {
     e.preventDefault();
     const handleSearch = await props.searchForSquad(squads.squadName);
-    if (!handleSearch || handleSearch.status === 404) {
-      return;
+    console.log(handleSearch.response.status);
+    if (!handleSearch || handleSearch.response.status === 404) {
       setSquads({
         ...squads,
         allSquads: ["Squad not found with this name"]
       });
+      return;
+    } else {
+      setSquads({
+        ...squads,
+        allSquads: [handleSearch.data]
+      });
     }
-    setSquads({
-      ...squads,
-      allSquads: [handleSearch.data]
-    });
   };
 
   const handleChange = e => {
@@ -69,6 +72,10 @@ function SquadSearch(props) {
                 <h3>Members: {item.memberCount}</h3>
               </div>
             ))
+          ) : squads.allSquads.length > 0 ? (
+            <div style={{ textAlign: "center" }} id="query__result">
+              <h3>{squads.allSquads[0]}</h3>
+            </div>
           ) : (
             <div id="query__result">
               <h3>Squad Not Found</h3>

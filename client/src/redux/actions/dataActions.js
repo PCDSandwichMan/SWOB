@@ -16,8 +16,8 @@ export const loginUser = userData => dispatch => {
       dispatch({
         type: constants.LOGIN,
         payload: {
-          username: userRes.data.user.username,
-          userCharacter: userRes.data.character
+          username: userRes.data.infoResponse.username,
+          userCharacter: userRes.data.infoResponse.character
         }
       });
       dispatch({
@@ -293,8 +293,13 @@ export const searchForSquad = squadName => async dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response);
-      response = err;
+      response = err
+      dispatch({
+        type: constants.ADD_ERRORS,
+        payload: {
+          errors: err.response ? err.response.data : err
+        }
+      });
     });
   return response;
 };

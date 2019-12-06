@@ -20,7 +20,7 @@ export const refreshCharacter = () => dispatch => {
   );
   axios
     .get(`${constants.BASE_URL_PROD}/user/dashboard-data`)
-    .then(userData => {
+    .then(userData => { 
       axios
         .get(
           `https://swapi.co/api/people/?search=${userData.data.allUserInfo.userCharacter.characterName}`
@@ -49,7 +49,7 @@ export const refreshCharacter = () => dispatch => {
             });
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.response);
         });
       dispatch({
         type: constants.REFRESH,
@@ -84,7 +84,6 @@ export const levelRefresh = () => dispatch => {
   axios
     .get(`${constants.BASE_URL_PROD}/user/level`)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: constants.REFRESH_LEVEL,
         payload: res.data

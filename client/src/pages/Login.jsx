@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import '../styles/loginAndReset/loginStyles.scss';
-import bgVid from '../images/login-bg.mov';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import "../styles/loginAndReset/loginStyles.scss";
+import bgVid from "../images/login-bg.mov";
 // - Actions
-import { loginUser } from '../redux/actions/dataActions';
+import { loginUser } from "../redux/actions/dataActions";
+// Background
+import WarpSpeed from "./integrations/warpSpeed";
 
 function Login(props) {
   const [credentials, setCredentials] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: ""
   });
 
   const handleSignIn = e => {
@@ -20,7 +22,7 @@ function Login(props) {
   // - Check if auth is set and routes to dashboard onChange if so
   useEffect(() => {
     if (props.isAuthenticated) {
-      props.history.push('/dashboard');
+      props.history.push("/dashboard");
     }
   }, [props.isAuthenticated]);
 
@@ -30,12 +32,38 @@ function Login(props) {
       [event.target.name]: event.target.value
     });
   };
-  
+
+  let x;
+  useEffect(() => {
+    x = new WarpSpeed("canvas", {
+      speed: 1.5,
+      speedAdjFactor: 0.03,
+      density: 1.2,
+      shape: "circle",
+      warpEffect: true,
+      warpEffectLength: 5,
+      depthFade: true,
+      starSize: 3,
+      backgroundColor: "hsl(263,45%,7%)",
+      starColor: "#FFFFFF"
+    });
+  });
   return (
     <div>
-      <div id="bgVideo-wrap">
+      {/* <div id="bgVideo-wrap">
         <video autoPlay="true" loop="true" src={bgVid}></video>
-      </div>
+      </div> */}
+      <canvas
+        id="canvas"
+        style={{
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%"
+        }}
+      ></canvas>
+
       <div id="video-overlay"></div>
       <div id="login-content">
         <div id="login__form-container">
@@ -46,7 +74,7 @@ function Login(props) {
           </h1>
           {props.errors.signIn && Object.keys(props.errors).length === 1 ? (
             <h5
-              style={{ textTransform: 'capitalize', alignSelf: 'center' }}
+              style={{ textTransform: "capitalize", alignSelf: "center" }}
               className="flashAlert"
             >
               {props.errors.signIn}
@@ -59,7 +87,8 @@ function Login(props) {
               type="email"
               name="email"
               placeholder="Email"
-              style={props.errors.email ? { margin: '5px 0 0' } : null}
+              style={props.errors.email ? { margin: "5px 0 0" } : null}
+              required
             />
             {props.errors.email ? (
               <h5 className="flashAlert">{props.errors.email}</h5>
@@ -70,10 +99,13 @@ function Login(props) {
               type="password"
               name="password"
               placeholder="Password"
-              style={props.errors.password ? { margin: '5px 0 0' } : null}
+              style={props.errors.password ? { margin: "5px 0 0" } : null}
+              required
             />
-            {props.errors.password ? (
-              <h5 className="flashAlert">{props.errors.password}</h5>
+            {props.errors.length > 0 ? (
+              <h5 style={{ margin: "10px 0" }} className="flashAlert">
+                {props.errors[0].errors}
+              </h5>
             ) : null}
             <button type="submit">Sign In</button>
           </form>
@@ -101,7 +133,4 @@ const mapActionsToProps = {
   loginUser
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(Login);
+export default connect(mapStateToProps, mapActionsToProps)(Login);

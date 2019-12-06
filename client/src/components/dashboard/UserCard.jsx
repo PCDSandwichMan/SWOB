@@ -73,11 +73,8 @@ function UserCard(props) {
               Height:{" "}
               <span>
                 {props.userData.userCharacter.height
-                  ? (
-                      Math.ceil(
-                        (props.userData.userCharacter.height / 30.48) * 100
-                      ) / 100
-                    )
+                  ? (props.userData.userCharacter.height / 30.48)
+                      .toFixed(2)
                       .toString()
                       .split(".")
                       .join(`' `) + '"'
@@ -138,8 +135,7 @@ function UserCard(props) {
           <h4>
             <span style={{ color: "green" }}>Win</span> /{" "}
             <span style={{ color: "red" }}>Loss</span>:{" "}
-            {typeof props.userData.userCharacter.stats.totalLosses !=
-            "undefined"
+            {typeof props.userData.userCharacter.stats === "object"
               ? Math.round(
                   100 *
                     (props.userData.userCharacter.stats.totalWins /
@@ -153,8 +149,7 @@ function UserCard(props) {
           <h4>
             Total Wins:{" "}
             <span id="kd__wins">
-              {typeof props.userData.userCharacter.stats.totalWins !=
-              "undefined"
+              {typeof props.userData.userCharacter.stats === "object"
                 ? props.userData.userCharacter.stats.totalWins
                 : null}
             </span>
@@ -162,8 +157,7 @@ function UserCard(props) {
           <h4>
             Total Losses:{" "}
             <span id="kd__losses">
-              {typeof props.userData.userCharacter.stats.totalLosses !=
-              "undefined"
+              {typeof props.userData.userCharacter.stats === "object"
                 ? props.userData.userCharacter.stats.totalLosses
                 : null}
             </span>
@@ -173,7 +167,7 @@ function UserCard(props) {
           <h4>Win Streak: </h4>
           <hr />
           <h4 id="streak__num">
-            {typeof props.userData.userCharacter.stats.winStreak != "undefined"
+            {typeof props.userData.userCharacter.stats === "object"
               ? props.userData.userCharacter.stats.winStreak
               : null}
           </h4>
@@ -193,3 +187,4 @@ const mapActionsToProps = {
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(UserCard);
+

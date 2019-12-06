@@ -7,9 +7,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 
-// Local Auth
-passport.use;
-
 // JWT Auth
 passport.use(
   new JwtStrategy(
@@ -20,14 +17,7 @@ passport.use(
     },
     async (req, payload, done) => {
       try {
-        let userLocate;
-        if (payload.createdUser) {
-          userLocate = payload.createdUser;
-        } else {
-          userLocate = payload.foundUser;
-        }
-        const user = await User.findById(userLocate._id);
-
+        const user = await User.findById(payload.user._id);
         if (!user) {
           return done(null, false);
         }
@@ -48,9 +38,9 @@ passport.use(
     {
       usernameField: "email"
     },
-    async (username, password, done) => {
+    async (email, password, done) => {
       try {
-        const user = await User.findOne(username);
+        const user = await User.findOne({ email });
 
         if (!user) {
           return done(null, false);

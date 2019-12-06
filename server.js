@@ -15,6 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// TODO matt: trav vid for deploy other for security
 // - Sets for prod (specified before for morgan set before routes)
 if (process.env.NODE_ENV === "production") {
   // Turn on off access to the API engin type and version

@@ -50,7 +50,7 @@ function SquadCard(props) {
 
   const handleSquadInformation = async => {
     props.toggleModal("squad-information");
-  }
+  };
 
   return (
     <div id="squadCard">
@@ -119,23 +119,59 @@ function SquadCard(props) {
         </section>
       ) : null}
 
+      {/* 
+      <div className="btn-cont">
+        <a className="btn">
+        Learn More
+        <span className="line-1"></span>
+        <span className="line-2"></span>
+        <span className="line-3"></span>
+        <span className="line-4"></span>
+        </a>
+      </div>
+       */}
+
       <div id="squadCard-buttons">
         {props.squad && props.squad.grandAdmiral === props.username ? (
-          <div onClick={handleCommandPanel}>
-            <a>Command Panel</a>
+          <div onClick={handleCommandPanel} className="btn-cont">
+            <a className="btn">
+              Command Panel
+              <span className="line-1"></span>
+              <span className="line-2"></span>
+              <span className="line-3"></span>
+              <span className="line-4"></span>
+            </a>
           </div>
         ) : props.squad && props.squad.squadName ? (
-          <div onClick={handleSquadInformation}>
-            <a>Squad Information</a>
+          <div onClick={handleSquadInformation} className="btn-cont">
+            <a className="btn">
+              Squad Information
+              <span className="line-1"></span>
+              <span className="line-2"></span>
+              <span className="line-3"></span>
+              <span className="line-4"></span>
+            </a>
           </div>
         ) : (
           <section id="creation__btn-container">
-            <div onClick={handleSquadCreation}>
-              <a>Activate Squad</a>
+            <div onClick={handleSquadCreation} className="btn-cont">
+              <a className="btn">
+                Activate Squad
+                <span className="line-1"></span>
+                <span className="line-2"></span>
+                <span className="line-3"></span>
+                <span className="line-4"></span>
+              </a>
             </div>
 
-            <div onClick={handleModalSquadSearch}>
-              <a>Search Squad</a>
+            <div onClick={handleModalSquadSearch} className="btn-cont">
+              <a id="btn-green" className="btn">
+                Search Squad
+                <span className="line-1"></span>
+                <span className="line-2"></span>
+                <span className="line-3"></span>
+                <span className="line-4"></span>
+              </a>
             </div>
           </section>
         )}

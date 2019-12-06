@@ -56,10 +56,10 @@ function BattleCard(props) {
       </div>
       {!activeBattle.status ? (
         <div id="battleCard__battleButtons">
-          <div onClick={handleBotBattle}>
+          <div className="brk-btn" onClick={handleBotBattle}>
             <a>Bot Battle</a>
           </div>
-          <div onClick={handleOnlineBattle}>
+          <div className="brk-btn" onClick={handleOnlineBattle}>
             <a>Online Battle</a>
           </div>
         </div>
@@ -70,11 +70,13 @@ function BattleCard(props) {
         <div>
           <h3>
             Attack Points -{" "}
-            {props.userInfo.userCharacter.stats.attackMultiplier}
+            {props.userInfo.userCharacter.stats &&
+              props.userInfo.userCharacter.stats.attackMultiplier}
           </h3>
           <h3>
             Defence Points -{" "}
-            {props.userInfo.userCharacter.stats.defenseMultiplier}
+            {props.userInfo.userCharacter.stats &&
+              props.userInfo.userCharacter.stats.defenseMultiplier}
           </h3>
         </div>
       </div>
@@ -84,14 +86,6 @@ function BattleCard(props) {
         <div>
           <div id="battleCard__container__statModifier">
             <h3>You have no artifacts...</h3>
-            {/* <div>
-              <input type="checkbox" name="statModifier" id="statModifier" />
-              <h3>Stuff goes here</h3>
-            </div>
-            <h3>|</h3>
-            <h3>Artifact Type</h3>
-            <h3>|</h3>
-            <h3>Stat Change</h3> */}
           </div>
         </div>
       </div>

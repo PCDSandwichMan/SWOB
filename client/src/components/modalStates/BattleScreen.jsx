@@ -61,16 +61,10 @@ function BattleScreen(props) {
           </div>
           {!activeBattle.status && (
             <section>
-              <div
-                onClick={handleBotBattle}
-                className="onlineBattle-buttons bot"
-              >
+              <div onClick={handleBotBattle} id="brk-btn__adjustment" className="brk-btn">
                 <a>Bot Battle</a>
               </div>
-              <div
-                onClick={handleOnlineBattle}
-                className="onlineBattle-buttons online"
-              >
+              <div onClick={handleOnlineBattle} id="brk-btn__adjustment" className="brk-btn">
                 <a>Online Battle</a>
               </div>
             </section>
@@ -83,6 +77,7 @@ function BattleScreen(props) {
         </div>
         <div id="onlineBattle__global-container">
           {/* // - ============ RIGHT USER OPTIONS ================= */}
+            <h1 id="global__title">Potential Defenders</h1>
           <table id="global__table">
             <thead>
               <tr id="global__header">

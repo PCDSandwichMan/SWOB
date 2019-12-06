@@ -22,17 +22,17 @@ router.post("/new", async (req, res) => {
     }
   });
 
-  newUser.save(async (err, createdUser) => {
+  newUser.save(async (err, user) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
         userCreation: "an error occurred while trying to save you user"
       });
     }
-    const token = await jwt.sign({ createdUser }, config.JWT_KEY, {
+    const token = await jwt.sign({ user }, config.JWT_KEY, {
       expiresIn: "3hr"
     });
-    let formatedUser = createdUser;
+    let formatedUser = user;
     formatedUser.password = "";
     return res.status(201).json({ newUser: formatedUser, token: token });
   });
@@ -68,17 +68,13 @@ router.get("/dashboard-data", async (req, res) => {
   try {
     tokenEncoded = req.headers.authorization.split(" ")[1];
     token = jwt.decode(tokenEncoded, config.JWT_KEY);
-
     if (!token) {
       return res
         .status(200)
         .json({ error: "token could be verified or was not included" });
     }
     // after verifying the token the user is fetch and sent
-    userId =
-      typeof token.createdUser === "undefined"
-        ? token.foundUser._id
-        : token.createdUser._id;
+    userId = token.user._id;
     User.findById(userId, (err, foundUser) => {
       if (err || !foundUser) {
         err && console.log(err);
@@ -91,7 +87,7 @@ router.get("/dashboard-data", async (req, res) => {
       returnUser.password = null;
       returnUser._id = null;
       returnUser.createdAt = null;
-      returnUser.updatedAt = null; 
+      returnUser.updatedAt = null;
       return res.status(200).json({ allUserInfo: returnUser });
     });
   } catch (err) {
@@ -106,12 +102,10 @@ router.get(
   "/level",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    res
-      .status(200)
-      .json({
-        rank: req.user.userCharacter.rpgInfo.rank,
-        xp: req.user.userCharacter.rpgInfo.xp
-      });
+    res.status(200).json({
+      rank: req.user.userCharacter.rpgInfo.rank,
+      xp: req.user.userCharacter.rpgInfo.xp
+    });
   }
 );
 
