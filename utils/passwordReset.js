@@ -38,7 +38,18 @@ module.exports = {
         to: user.email,
         from: process.env.RESET_EMAIL,
         subject: "Password Reset",
-        text: `https://${req.headers.host}/reset/${token}\n\n`
+        text: `
+        Hi,
+
+        You recently requested to reset your password for your Star Wars Online Battles Account. Use the link below to reset it. This password reset is only valid for 1 hour(s).
+
+        https://${req.headers.host}/reset/${token}
+        
+        If you did not request a password reset, please ignore this email or contact matthew.endicott.dev@gmail.com if you have questions.
+        
+        Thank you,
+        The SWOB Team
+        `
       };
       smtpTransport.sendMail(mailOptions, function(err) {
         HTMLFormControlsCollection.log("mail sent");

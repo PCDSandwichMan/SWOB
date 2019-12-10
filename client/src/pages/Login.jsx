@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "../styles/loginAndReset/loginStyles.scss";
-import bgVid from "../images/login-bg.mov";
+
 // - Actions
 import { loginUser } from "../redux/actions/dataActions";
 // Background

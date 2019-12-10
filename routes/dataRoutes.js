@@ -62,7 +62,18 @@ router.post("/reset", validateBody(schemas.reqReset), async (req, res) => {
           to: user.email,
           from: "pcdtestpcd@gmail.com",
           subject: "Password Reset",
-          text: `http://localhost:3000/reset/${token}\n\n` // TODO on production add https and correct rest link
+          text: `
+          Hi,
+  
+          You recently requested to reset your password for your Star Wars Online Battles Account. Use the link below to reset it. This password reset is only valid for 1 hour(s).
+  
+          http://localhost:3000/reset/${token}
+          
+          If you did not request a password reset, please ignore this email or contact matthew.endicott.dev@gmail.com if you have questions.
+          
+          Thank you,
+          The SWOB Team
+          `
         };
         smtpTransport.sendMail(mailOptions, function(err) {
           console.log("mail sent");
